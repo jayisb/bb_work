@@ -8,8 +8,10 @@ import os
 import pyperclip
 
 def startbb():
+    # Launching the bloomberg application
     app = Application().start("C:\\Program Files\\blp\\Wintrv\\WINTRV.EXE")
     time.sleep(40)
+    # Maximizes the screen
     a = pyautogui.locateOnScreen("C:\\Users\\Administrator\\Pictures\\max.PNG")
     b = pyautogui.locateOnScreen("C:\\Users\\Administrator\\Pictures\\max1.PNG")
     c = pyautogui.locateOnScreen("C:\\Users\\Administrator\\Pictures\\max2.PNG")
@@ -37,6 +39,7 @@ def startbb():
     time.sleep(1)
     pyautogui.click(500, 500)
     time.sleep(15)
+    # Entering username and password	
     pyautogui.click(100, 270)
     pyautogui.typewrite('jaycsa')
     time.sleep(3)
@@ -47,10 +50,11 @@ def startbb():
     time.sleep(45)
     #For launchpad
     pyautogui.click(1880, 5)
-    #For mini launchpad
+    #For minimizing launchpad
     time.sleep(5)
     pyautogui.click(325, 5)
     time.sleep(5)
+    # Loads SPLC function
     pyautogui.click(300,50)
     pyautogui.typewrite("SPLC")
     #pyautogui.click(300,50)
@@ -62,6 +66,7 @@ def startbb():
     pyautogui.click(210, 890)
     time.sleep(5)
 
+# Code to close the application	
 def closebb():
     first_run = 0
     pyautogui.moveTo(900, 1050)
@@ -73,6 +78,7 @@ def closebb():
     pyautogui.click(950, 590)
     time.sleep(5)
     
+# Function to take screenshot and saving them with unique name	
 def screenshot():
     im=ImageGrab.grab()
     timestr = time.strftime("%Y%m%d-%H%M%S")
@@ -93,7 +99,9 @@ def screenshot1():
     im.save(file_location)
     return os.path.join('C:\\Users\\Administrator\\Desktop\\customers', file_name)
 
+# Reads the next ticker from the file
 def reader():
+    # Tracking the line number till which screenshots are taken. 	
     with open('C:\\Users\\Administrator\\Desktop\\status.txt', 'r+') as f:
         text = f.read()
         print text
@@ -128,8 +136,10 @@ def closebb():
     time.sleep(5)
 
 if __name__ == "__main__":
+	# Launch Bloomberg and login
         startbb()
         while firm_count < 1390:
+	    # Verifies that if it is displaying SPLC screen	
             pyautogui.screenshot('C:\\Users\\Administrator\\Desktop\\quan.png', region=(1350,121, 600, 40))
             time.sleep(2)
             if pyautogui.locate("C:\\Users\\Administrator\\Pictures\\Capture.PNG", "C:\\Users\\Administrator\\Desktop\\quan.png"):
@@ -181,11 +191,13 @@ if __name__ == "__main__":
                 time.sleep(4)
                 im = pyautogui.screenshot('C:\\Users\\Administrator\\Desktop\\up.png', region=(1870,290, 60, 60))
                 time.sleep(1)
+		# Checks if it needs to scroll down
                 print "check"
                 test_v = pyautogui.locate("C:\\Users\\Administrator\\Pictures\\Up1.PNG", "C:\\Users\\Administrator\\Desktop\\up.png") or pyautogui.locate("C:\\Users\\Administrator\\Pictures\\Up3.PNG", "C:\\Users\\Administrator\\Desktop\\up.png") or pyautogui.locate("C:\\Users\\Administrator\\Pictures\\Up4.PNG", "C:\\Users\\Administrator\\Desktop\\up.png")
                 print "check1"
                 print test_v
                 if test_v:
+		    # In case of scrolling down is required, it takes last sequence number for identifying exit crieteria 	
                     im = pyautogui.screenshot('C:\\Users\\Administrator\\Desktop\\prev.png', region=(0,850, 50, 38))
                     time.sleep(1)
                     while(True):
@@ -194,6 +206,7 @@ if __name__ == "__main__":
                         time.sleep(0.5)
                         im = pyautogui.screenshot('C:\\Users\\Administrator\\Desktop\\curr.png', region=(0,955, 50, 38))
                         time.sleep(1)
+			# If previous and current sequence numbers are same, exit 
                         if pyautogui.locate("C:\\Users\\Administrator\\Desktop\\curr.png", "C:\\Users\\Administrator\\Desktop\\prev.png"):
                             print "end"
                             os.remove(screenshot_name)
@@ -202,6 +215,7 @@ if __name__ == "__main__":
                             print "entered imp"
                             im = pyautogui.screenshot('C:\\Users\\Administrator\\Desktop\\prev.png', region=(0,955, 50, 38))
                             time.sleep(1)
+			    # Pressing down key for 18 times
                             for x in range(18):
                                 pyautogui.click(1910, 980)
                                 time.sleep(0.01)
@@ -209,7 +223,7 @@ if __name__ == "__main__":
                         print "simple life"
                         screenshot()
                         time.sleep(1)
-
+                # Same steps for capturing the customers data 
                 pyautogui.click(700, 240)
                 time.sleep(1)
                 pyautogui.click(730, 350)
